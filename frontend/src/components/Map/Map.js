@@ -8,15 +8,18 @@ export default function Map() {
     const [flights, setFlights] = useState([]);
 
     useEffect(() => {
-        fetchFlights().then((resp) => resp.json()).then((body) => {
-            let arr = [];
-            for (let i = 0; i < 300; i++) {
-                if (body.states[i][3] != null && body.states[i][4] != null) {
-                    arr.push(body.states[i]);
+        const interval = setInterval(() => {
+            fetchFlights().then((resp) => resp.json()).then((body) => {
+                let arr = [];
+                for (let i = 0; i < 300; i++) {
+                    if (body.states[i][3] != null && body.states[i][4] != null) {
+                        arr.push(body.states[i]);
+                    }
                 }
-            }
-            setFlights(arr);
-        })
+                setFlights(arr);
+            })
+    }, 10000);
+    return () => clearInterval(interval);
     }, []);
 
     return (
