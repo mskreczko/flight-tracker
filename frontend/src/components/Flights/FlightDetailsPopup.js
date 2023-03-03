@@ -6,7 +6,7 @@ export default function FlightDetailsPopup(props) {
 
     useEffect(() => {
         setFlightState(props.state);
-    })
+    }, []);
 
     return (
         <Popup>
