@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { icon } from './Icon';
 import { fetchFlights } from '../Flights/Flights';
 import 'leaflet/dist/leaflet.css';
+import FlightDetailsPopup from '../Flights/FlightDetailsPopup';
 
 const WGS84ToOSM = (lat, lon) => {
 
@@ -29,7 +30,6 @@ export default function Map() {
                 for (let i = 0; i < body.states.length; i++) {
                     if (body.states[i][3] != null && body.states[i][4] != null) {
                         let [newLon, newLot] = WGS84ToOSM(body.states[i][5], body.states[i][6]);
-                        console.log(newLon, newLot);
                         body.states[i][5] = newLon;
                         body.states[i][6] = newLot;
                         arr.push(body.states[i]);
@@ -47,13 +47,7 @@ export default function Map() {
 
             { flights.length > 0 ? flights.map((state) => (
                 <Marker key={state[0]} position={[state[5], state[6]]} icon={icon}>
-                    <Popup>
-                        <p>ICAO: {state[0]}</p>
-                        <p>Callsign: {state[1] ? state[1] : 'N/A'}</p>
-                        <p>Country of origin: {state[2]}</p>
-                        <p>Velocity: {state[9] ? state[9] + ' m/s': 'N/A'}</p>
-                        <p>Altitude: {state[13] ? state[13] + ' m' : 'N/A'}</p>
-                    </Popup>
+                    <FlightDetailsPopup state={state}/>
                 </Marker>
             )) : null }
         </MapContainer>
