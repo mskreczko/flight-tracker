@@ -26,7 +26,7 @@ export default function Map() {
         const interval = setInterval(() => {
             fetchFlights().then((resp) => resp.json()).then((body) => {
                 let arr = [];
-                for (let i = 0; i < 1000; i++) {
+                for (let i = 0; i < body.states.length; i++) {
                     if (body.states[i][3] != null && body.states[i][4] != null) {
                         let [newLon, newLot] = WGS84ToOSM(body.states[i][5], body.states[i][6]);
                         console.log(newLon, newLot);
@@ -48,9 +48,11 @@ export default function Map() {
             { flights.length > 0 ? flights.map((state) => (
                 <Marker key={state[0]} position={[state[5], state[6]]} icon={icon}>
                     <Popup>
-                        <p>{state[0]}</p>
-                        <p>{state[1]}</p>
-                        <p>{state[5]}, {state[6]}</p>
+                        <p>ICAO: {state[0]}</p>
+                        <p>Callsign: {state[1] ? state[1] : 'N/A'}</p>
+                        <p>Country of origin: {state[2]}</p>
+                        <p>Velocity: {state[9] ? state[9] + ' m/s': 'N/A'}</p>
+                        <p>Altitude: {state[13] ? state[13] + ' m' : 'N/A'}</p>
                     </Popup>
                 </Marker>
             )) : null }
