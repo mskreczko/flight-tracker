@@ -3,6 +3,7 @@ package pl.mskreczko.trackingapi.openskyapi;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.mskreczko.trackingapi.flights.dto.FlightStateDto;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class OpenSkyApiService {
     private final static String API_ROOT_URL = "https://opensky-network.org/api";
@@ -21,10 +23,12 @@ public class OpenSkyApiService {
         ObjectNode node = objectMapper.readValue(response, ObjectNode.class);
 
         Integer time = node.get("time").asInt();
+
         List<FlightStateDto> states = new ArrayList<>();
         for (JsonNode n : node.get("states")) {
             states.add(objectMapper.convertValue(n, FlightStateDto.class));
         }
+
         return new OpenSkyApiResponseDto(time, states);
     }
 
