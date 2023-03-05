@@ -6,7 +6,12 @@ export default function MainView() {
     return (
         <div className='container'>
             <header>
-                <h1>Flights Tracker</h1>
+                <ul>
+                    <li><a href='/'><h1>Flight Tracker</h1></a></li>
+                    <nav>
+                        <li><a href='/about'>ABOUT</a></li>
+                    </nav>
+                </ul>
             </header>
             <Outlet/>
             <footer>
