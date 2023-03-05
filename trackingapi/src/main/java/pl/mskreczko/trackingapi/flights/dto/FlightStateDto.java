@@ -48,4 +48,6 @@ public class FlightStateDto {
     private Integer positionSource;
 
     private Integer category;
+
+    private Integer direction;
 }
