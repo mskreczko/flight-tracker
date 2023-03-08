@@ -12,14 +12,6 @@ Technologies used:
 
 <hr>
 
-Commands to run project:
-```
-git clone https://github.com/mskreczko/flight-tracker.git
-docker-compose up --build
-```
-
-<hr>
-
 ## NOTE
 
 This project uses unathenticated API queries which are limited. Thay may cause website not functioning properly at some time.
